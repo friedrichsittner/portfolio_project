@@ -1,5 +1,5 @@
 {
-        // Python Einstellungen
+    // Python Einstellungen
     "python.defaultInterpreterPath": "./.venv/Scripts/python",
     "python.terminal.activateEnvironment": true,
     "python.linting.enabled": true,
@@ -23,12 +23,7 @@
         "editor.formatOnType": true
     },
     "ruff.lineLength": 88,
-
-
-
-
     // Jupyter Einstellungen
     "jupyter.askForKernelRestart": false,
     "jupyter.interactiveWindow.creationMode": "perFile",
-
 }
