@@ -12,7 +12,8 @@ if __name__ == '__main__':
     
     path = '/home/jane/Documents/Weiterbildung/DPP/portfolio_project/data/'
     
-    df_soil = pd.read_csv(path + 'raw/us-drought-meteorological-data/soil_data.csv')
+    df_soil = pd.read_csv(path + 'raw/us-drought-meteorological-data/soil_data.csv', index_col = 'fips')
+    #df_soil = df_soil.drop('fips', axis = 1)
     df_met_train = pd.read_csv(path + 'raw/met_train.csv')
     df_met_test_val = pd.read_csv(path + 'raw/met_test_val.csv')
     
@@ -30,14 +31,14 @@ if __name__ == '__main__':
     target_test_met = df_met_test['score']
     
     av_drought_list = []
-    for fips in df_soil.fips:
+    for fips in df_soil.index:
         df_met_train_fips = df_met_train[df_met_train.fips == fips]
         df_met_test_fips = df_met_test[df_met_test.fips == fips]
         av_met_train_fips = df_met_train_fips.score.mean()
         av_met_test_fips = df_met_test_fips.score.mean()
         av_drought_list.append((av_met_train_fips + av_met_test_fips)/2)
     
-    target_soil = pd.DataFrame(av_drought_list, index = df_soil.fips)
+    target_soil = pd.DataFrame(av_drought_list, index = df_soil.index)
     
     features_train_soil, features_test_soil, target_train_soil, target_test_soil = train_test_split(df_soil,
                                                                                                     target_soil,
