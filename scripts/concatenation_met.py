@@ -7,6 +7,7 @@ Created on Tue Nov  4 15:55:04 2025
 """
 
 import pandas as pd
+import numpy as np
 
 def concatenate(features_train, features_test, target_train, target_test):
     '''
@@ -25,21 +26,18 @@ def concatenate(features_train, features_test, target_train, target_test):
     '''
     
     data_train_test_concat =[]
-    data = {'train' : (features_train, target_train),
+    datasets = {'train' : (features_train, target_train),
                     'test' : (features_test, target_test)}
-    for dataset in data:
-        features, target = data[dataset][0], data[dataset][1]
-        target_concat = target[~target.isna()]
-        features_concat = {}
-        for feat in features.columns:
-            feature_list = [features.loc[0, feat]]
-            old_week = 0
-            print('Concatenating feature {} of {}ing data.'.format(feat, dataset))
-            for week in target_concat.index[1:]:
-                feature_list.append(features.loc[old_week + 1:week + 1, feat].mean())
-                old_week = week
-            features_concat[feat] = feature_list
-        data_train_test_concat.append((pd.DataFrame(features_concat), target_concat))
+    
+    #current issue: need to split by fips and week
+    for name,  (features, target) in datasets.items():
+        target_concat = target.dropna()
+        cut_points = target_concat.index.to_numpy()
+        seg_ids = np.searchsorted(cut_points, np.arange(len(features)), side = 'right')
+        features_grouped = features.groupby(seg_ids).mean()
+        data_train_test_concat.append((features_grouped, target_concat))
+        print('Unique Fips for {}set: '.format(name))
+        print(len(features_grouped.fips.unique()))
     
     
     return (data_train_test_concat[0][0], data_train_test_concat[1][0], 
