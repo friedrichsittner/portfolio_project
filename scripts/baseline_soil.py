@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import Lasso, Ridge, ElasticNet, LinearRegression
 from sklearn.metrics import mean_squared_error
 
-from data_processing import remove_outliers
+from preprocessing_soil import remove_outliers
 
 path = '/home/jane/Documents/Weiterbildung/DPP/portfolio_project/data/processed/soil/'
 features_train = pd.read_pickle(path + 'features_train_soil.p')

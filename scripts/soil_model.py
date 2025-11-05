@@ -7,6 +7,7 @@ Created on Tue Nov  4 14:04:06 2025
 """
 
 import pandas as pd
+import pickle
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge
@@ -14,7 +15,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 
-from data_processing import remove_outliers
+from preprocessing_soil import remove_outliers
 
 def ridge_model(features_train, features_test, target_train, target_test):
     
@@ -36,7 +37,7 @@ def ridge_model(features_train, features_test, target_train, target_test):
                          ('lin_model', Ridge(alpha = 77))])
     
     
-    
+    pipeline.fit(features_train, target_train)
     target_pred = pipeline.predict(features_test)
     mse = mean_squared_error(target_pred, target_test)
     print('Mean Squared Error for Baseline Model optimized Ridge Regression is: {}'.format(str(mse)))
@@ -53,4 +54,8 @@ if __name__ == '__main__':
 
     features_train, target_train = remove_outliers(features_train, target_train)
     
-    ridge_model(features_train, features_test, target_train, target_test)
+    pipeline_soil, target_test_pred = ridge_model(features_train, features_test, target_train, target_test)
+    
+    pd.to_pickle(target_test_pred, path + 'target_test_pred.p')
+    pickle.dump(pipeline_soil, 
+                open('/home/jane/Documents/Weiterbildung/DPP/portfolio_project/scripts/trained_model_soil.p', 'wb'))
