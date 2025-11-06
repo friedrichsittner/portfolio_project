@@ -32,16 +32,23 @@ def concatenate(features_train, features_test, target_train, target_test):
     #current issue: need to split by fips and week
     for name,  (features, target) in datasets.items():
         target_concat = target.dropna()
-        cut_points = target_concat.index.to_numpy()
+        fips_list = features.fips.unique()
+        cut_points = np.sort(np.unique((np.append(target_concat.index.to_numpy(),
+                                     features.fips.searchsorted(fips_list[1:], side = 'left')))))
         seg_ids = np.searchsorted(cut_points, np.arange(len(features)), side = 'right')
         features_grouped = features.groupby(seg_ids).mean()
+        #print(sum(features_grouped.fips.isna()))
+        #target_concat = target_concat.reindex(range(len(target_concat)))
+        #features_grouped = features_grouped.reindex(range(len(features_grouped)))
+        #print(features_grouped.iloc[0, :])
+        print(features_grouped.index)
         data_train_test_concat.append((features_grouped, target_concat))
         print('Unique Fips for {}set: '.format(name))
         print(len(features_grouped.fips.unique()))
-    
-    
-    return (data_train_test_concat[0][0], data_train_test_concat[1][0], 
-            data_train_test_concat[0][1], data_train_test_concat[1][1])
+        target_concat = target_concat
+        
+    return (data_train_test_concat[0][0], data_train_test_concat[0][1], 
+            data_train_test_concat[1][0], data_train_test_concat[1][1])
 
 if __name__ == '__main__':
     path = '/home/jane/Documents/Weiterbildung/DPP/portfolio_project/data/processed/met/'
@@ -55,6 +62,6 @@ if __name__ == '__main__':
                                                                                                        target_train,
                                                                                                        target_test)
     pd.to_pickle(features_train_concat, path + 'features_train_concat.p')
-    pd.to_pickle(features_train_concat, path + 'target_train_concat.p')
-    pd.to_pickle(features_train_concat, path + 'features_test_concat.p')
-    pd.to_pickle(features_train_concat, path + 'target_test_concat.p')
+    pd.to_pickle(target_train_concat, path + 'target_train_concat.p')
+    pd.to_pickle(features_test_concat, path + 'features_test_concat.p')
+    pd.to_pickle(target_test_concat, path + 'target_test_concat.p')
