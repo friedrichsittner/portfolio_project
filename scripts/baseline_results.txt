@@ -1,0 +1,24 @@
+
+Run at 2025-11-10 15:14:43.693466Model Lasso for Region east yields a Mean Squared Error of 0.11801028866390995
+Model Ridge for Region east yields a Mean Squared Error of 0.17845581089582066
+Model Elastic Net for Region east yields a Mean Squared Error of 0.12616573467391917
+Model Linear for Region east yields a Mean Squared Error of 0.17855774220704643
+Model SVR for Region east yields a Mean Squared Error of 0.17406015411609618
+
+Run at 2025-11-10 15:14:49.281993Model Lasso for Region west yields a Mean Squared Error of 1.0352946776500076
+Model Ridge for Region west yields a Mean Squared Error of 4.260034081928489
+Model Elastic Net for Region west yields a Mean Squared Error of 1.056111782827829
+Model Linear for Region west yields a Mean Squared Error of 4.260585078177847
+Model SVR for Region west yields a Mean Squared Error of 1.2958168783112085
+
+Run at 2025-11-10 15:15:02.520947Model Lasso for Region south yields a Mean Squared Error of 0.5567785620480536
+Model Ridge for Region south yields a Mean Squared Error of 0.6040317577309371
+Model Elastic Net for Region south yields a Mean Squared Error of 0.5722895064305931
+Model Linear for Region south yields a Mean Squared Error of 0.6040530092005283
+Model SVR for Region south yields a Mean Squared Error of 2.3237527917599254
+
+Run at 2025-11-10 15:16:10.893444Model Lasso for Region midwest yields a Mean Squared Error of 0.22957822182984305
+Model Ridge for Region midwest yields a Mean Squared Error of 0.2699141644908571
+Model Elastic Net for Region midwest yields a Mean Squared Error of 0.21158958108004292
+Model Linear for Region midwest yields a Mean Squared Error of 0.26997632183727516
+Model SVR for Region midwest yields a Mean Squared Error of 0.2964872899396099

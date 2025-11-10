@@ -33,7 +33,6 @@ def remove_outliers(features_soil, features_met, target_soil, target_met):
     features_soil = features_soil[mask_SQ]
     target_soil = target_soil[mask_SQ]
     mask_met = pd.Series([True]*len(features_met), index = features_met.index)
-    print(features_met.index)
     for fips in mask_SQ[mask_SQ == False].index:
         mask_met &= ~(features_met['fips'] == fips)
 
@@ -53,9 +52,7 @@ def remove_outliers(features_soil, features_met, target_soil, target_met):
     
     
     features_met = features_met.drop(mask_met[mask_met == False].index)
-    print(target_met.index)
     target_met = target_met.drop(mask_met[mask_met == False].index)
-    return
     return features_soil, features_met, target_soil, target_met
 
 if __name__ == '__main__':

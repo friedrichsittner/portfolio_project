@@ -24,29 +24,31 @@ def concatenate(features_train, features_test, target_train, target_test):
         - target_train (pd.DataFrame): preprocessed training target, averaged weekly
         - target_test (pd.DataFrame): testing target, averaged weekly
     '''
-    
+
     data_train_test_concat =[]
     datasets = {'train' : (features_train, target_train),
-                    'test' : (features_test, target_test)}
+                'test' : (features_test, target_test)}
     
-    #current issue: need to split by fips and week
     for name,  (features, target) in datasets.items():
-        target_concat = target.dropna()
-        fips_list = features.fips.unique()
-        cut_points = np.sort(np.unique((np.append(target_concat.index.to_numpy(),
-                                     features.fips.searchsorted(fips_list[1:], side = 'left')))))
-        seg_ids = np.searchsorted(cut_points, np.arange(len(features)), side = 'right')
-        features_grouped = features.groupby(seg_ids).mean()
-        #print(sum(features_grouped.fips.isna()))
-        #target_concat = target_concat.reindex(range(len(target_concat)))
-        #features_grouped = features_grouped.reindex(range(len(features_grouped)))
-        #print(features_grouped.iloc[0, :])
-        print(features_grouped.index)
-        data_train_test_concat.append((features_grouped, target_concat))
+        df = features.copy()
+        df['score'] = target
+        df_grouped = df.groupby('fips')
+        feature_concat_list = []
+        target_concat_list = []
+        for group in df_grouped:
+            fips_feat, fips_target = group[1].drop('score', axis = 1), group[1].score
+            fips_feat = fips_feat.reset_index()
+            fips_target = fips_target.reset_index()
+            target_concat = fips_target.dropna()
+            cut_points = target_concat.index.to_numpy()
+            seg_ids = np.searchsorted(cut_points, np.arange(len(fips_feat)), side = 'right')
+            fips_feat_grouped = fips_feat.groupby(seg_ids).mean()[:len(target_concat)]
+            feature_concat_list.append(fips_feat_grouped)
+            target_concat_list.append(target_concat)
+        feature_concat_df = pd.concat(feature_concat_list).reset_index().drop(['level_0', 'index'], axis = 1)
+        target_concat_df = pd.concat(target_concat_list).reset_index().drop(['level_0', 'index'], axis = 1)
+        data_train_test_concat.append((feature_concat_df, target_concat_df))
         print('Unique Fips for {}set: '.format(name))
-        print(len(features_grouped.fips.unique()))
-        target_concat = target_concat
-        
     return (data_train_test_concat[0][0], data_train_test_concat[0][1], 
             data_train_test_concat[1][0], data_train_test_concat[1][1])
 
