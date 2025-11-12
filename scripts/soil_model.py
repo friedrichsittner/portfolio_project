@@ -58,4 +58,4 @@ if __name__ == '__main__':
     
     pd.to_pickle(target_test_pred, path + 'target_test_pred.p')
     pickle.dump(pipeline_soil, 
-                open('/home/jane/Documents/Weiterbildung/DPP/portfolio_project/scripts/trained_model_soil.p', 'wb'))
+                open('/home/jane/Documents/Weiterbildung/DPP/portfolio_project/scripts/models/trained_model_soil.p', 'wb'))

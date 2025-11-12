@@ -1,0 +1,121 @@
+Results for GridSearch Models using Standard Scaler and PCA over all features
+
+Run at 2025-11-10 17:38:51.955917
+Results for Model LinearRegression
+{'pca__n_components': 0.95}
+-1.3069480395212096
+Model LinearRegression for Region west yields a Mean Squared Error of 4.466920154136024
+
+Run at 2025-11-10 17:39:06.564039
+Results for Model Lasso
+{'Lasso__alpha': 0.01, 'pca__n_components': 0.95}
+-1.306958328331918
+Model Lasso for Region west yields a Mean Squared Error of 4.234662124856094
+
+Run at 2025-11-10 17:39:18.053684
+Results for Model Ridge
+{'Ridge__alpha': 1000.0, 'pca__n_components': 0.95}
+-1.303437868518527
+Model Ridge for Region west yields a Mean Squared Error of 4.336214586041824
+
+Run at 2025-11-10 17:40:42.260775
+Results for Model ElasticNet
+{'ElasticNet__alpha': 0.1291549665014884, 'ElasticNet__l1_ratio': 0.0, 'pca__n_components': 0.95}
+-1.2960883092110649
+Model ElasticNet for Region west yields a Mean Squared Error of 3.843883950601456
+
+Run at 2025-11-10 17:49:00.286466
+Results for Model LinearSVR
+{'LinearSVR__C': 0.019306977288832496, 'pca__n_components': 0.9}
+-1.4532978683375484
+Model LinearSVR for Region west yields a Mean Squared Error of 2.7903674157757337
+
+Run at 2025-11-10 17:52:02.566293
+Results for Model LinearRegression
+{'pca__n_components': 0.95}
+-0.3613738475562521
+Model LinearRegression for Region east yields a Mean Squared Error of 0.16155605678078655
+
+Run at 2025-11-10 17:52:16.482464
+Results for Model Lasso
+{'Lasso__alpha': 0.01, 'pca__n_components': 0.9}
+-0.3648356674529373
+Model Lasso for Region east yields a Mean Squared Error of 0.09370793548645864
+
+Run at 2025-11-10 17:52:26.220667
+Results for Model Ridge
+{'Ridge__alpha': 1000.0, 'pca__n_components': 0.95}
+-0.36025830634592104
+Model Ridge for Region east yields a Mean Squared Error of 0.14963781866076728
+
+Run at 2025-11-10 17:53:00.731526
+Results for Model ElasticNet
+{'ElasticNet__alpha': 0.1291549665014884, 'ElasticNet__l1_ratio': 0.0, 'pca__n_components': 0.95}
+-0.35949623941858466
+Model ElasticNet for Region east yields a Mean Squared Error of 0.13280036634307482
+
+Run at 2025-11-10 18:00:10.085230
+Results for Model LinearSVR
+{'LinearSVR__C': 19.306977288832496, 'pca__n_components': 0.9}
+-0.47624580604290073Model LinearSVR for Region east yields a Mean Squared Error of 0.08860429730793493
+
+Run at 2025-11-10 18:02:34.181997
+Results for Model LinearRegression
+{'pca__n_components': 0.8}
+-0.6850994530073278
+Model LinearRegression for Region south yields a Mean Squared Error of 0.6739285888911467
+
+Run at 2025-11-10 18:02:59.865228
+Results for Model Lasso
+{'Lasso__alpha': 0.01, 'pca__n_components': 0.8}
+-0.6867939179136093
+Model Lasso for Region south yields a Mean Squared Error of 0.6666835733366726
+
+Run at 2025-11-10 18:03:23.669835
+Results for Model Ridge
+{'Ridge__alpha': 1000.0, 'pca__n_components': 0.8}
+-0.6850643535772439
+Model Ridge for Region south yields a Mean Squared Error of 0.6726965293011872
+
+Run at 2025-11-10 18:17:06.212131
+Results for Model ElasticNet
+{'ElasticNet__alpha': 0.464158883361278, 'ElasticNet__l1_ratio': 0.0, 'pca__n_components': 0.95}
+-0.6843510223373824
+Model ElasticNet for Region south yields a Mean Squared Error of 0.6210141249004387
+
+Run at 2025-11-11 11:09:37.288620
+Region: midwestResults for Model LinearRegression
+{'pca__n_components': 0.9}
+-0.617401475914371
+Model LinearRegression for Region midwest yields a Mean Squared Error of 0.32212452603223585
+
+Run at 2025-11-11 11:09:55.030647
+Region: midwest
+Results for Model Lasso
+{'Lasso__alpha': 0.01, 'pca__n_components': 0.9}
+-0.6215878193751496
+Model Lasso for Region midwest yields a Mean Squared Error of 0.32389684558290877
+
+Run at 2025-11-11 11:10:13.282380
+Region: midwest
+Results for Model Ridge
+{'Ridge__alpha': 1000.0, 'pca__n_components': 0.9}
+-0.6170885663541437
+Model Ridge for Region midwest yields a Mean Squared Error of 0.3207993816745793
+
+Run at 2025-11-11 11:17:48.085287
+Region: midwest
+Results for Model ElasticNet
+{'ElasticNet__alpha': 0.464158883361278, 'ElasticNet__l1_ratio': 0.0, 'pca__n_components': 0.9}
+-0.6114322872963303
+Model ElasticNet for Region midwest yields a Mean Squared Error of 0.2799263108526312
+
+Run at 2025-11-11 11:47:03.517523
+Region: midwest
+Results for Model LinearSVR
+{'LinearSVR__C': 51.794746792312125, 'pca__n_components': 0.95}
+-0.7002153930806035
+Model LinearSVR for Region midwest yields a Mean Squared Error of 0.2011635796830736
+
+
+

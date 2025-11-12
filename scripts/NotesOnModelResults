@@ -1,0 +1,7 @@
+Notes on Model Results:
+- Best Regressor Region West: LinearSVR, C = 0.019, (general) PCA: 0.9 (2.79)
+- Best Regressor Region East: Linear SVR, C = 19.31, (general) PCA: 0.9 (0.089) 
+	+ Lasso also pretty good
+- Best Regressor Region South: ElasticNet or Ridge, SVR not run yett
+- Best Regressor Region Midwest: LinearSVR, C = 51.8, (general) PCA: 0.95 (0.2)
+
