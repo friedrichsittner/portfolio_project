@@ -9,7 +9,7 @@ import pandas as pd
 import pickle
 import numpy as np
 
-from preprocessing import remove_outliers
+from preprocessing import remove_soil_fips_from_met, remove_outliers_soil
 from sklearn.decomposition import PCA
 from sklearn.compose import ColumnTransformer
 
@@ -43,13 +43,11 @@ def feature_preperation(features_train_soil, features_test_soil,
 
     '''
     #remove outliers from training data and generate soil predictions-----------
-    
+      
+    features_train_soil, target_train_soil = remove_outliers_soil(features_train_soil, target_train_soil)
     features_soil = pd.concat([features_train_soil, features_test_soil])
-    features_train_soil, features_train_met, target_train_soil, target_train_met = remove_outliers(features_train_soil,
-                                                                                                   features_train_met,
-                                                                                                   target_train_soil, 
-                                                                                                   target_train_met)
-    
+    features_train_met, target_train_met = remove_soil_fips_from_met(features_soil, features_train_met, target_train_met)
+    features_test_met, target_test_met = remove_soil_fips_from_met(features_soil, features_test_met, target_test_met)
     #run model on all soil data, including outliers, because we need this later
     #for testing meteorological data that includes outlying fips
     target_soil_pred = model_soil.predict(features_soil)
@@ -116,6 +114,25 @@ def feature_preperation(features_train_soil, features_test_soil,
     return
 
 def wind_temp_pca(features, target, n_comp = 0.95):
+    '''
+    Run PCA on wind features and temperature features respectively using a 
+    ColumnTransformer
+
+    Parameters
+    ----------
+    features : pd.Dataframe
+        meteorological features.
+    target : 1D pd.Dataframe
+        meteorological target.
+    n_comp : variance to be explained by the PCAs, optional
+        DESCRIPTION. The default is 0.95.
+
+    Returns
+    -------
+    features : pd.Dataframe
+        meteorological features after PCA.
+
+    '''
     temp_cols = ['QV2M', 'T2M', 'T2MDEW', 'T2MWET', 'T2M_MAX', 'T2M_MIN', 'TS']
     wind_cols = ['WS10M', 'WS10M_MAX', 'WS10M_MIN', 'WS10M_RANGE', 'WS50M',
                     'WS50M_MAX', 'WS50M_MIN', 'WS50M_RANGE']
@@ -142,19 +159,25 @@ def wind_temp_pca(features, target, n_comp = 0.95):
                                   columns = list(pca_names)+ list(remaining_names),
                                   index = target.index)
     pickle.dump(col_pca, 
-                open('/home/jane/Documents/Weiterbildung/DPP/portfolio_project/scripts/models/trained_model_soil.p',
+                open('/home/jane/Documents/Weiterbildung/DPP/portfolio_project/scripts/models/wind_temp_pca.p',
                      'wb'))
     return features
 
 def get_important_components(model, feature_names):
-    
     '''
-    Returns features names of important components from PCA
-    Parameters:
-        model : fitted pca model
-        feature_names : list of features that go into PCA
-    Returns: 
-        most_important_names : list of most important feature names
+
+    Return features names of important components from PCA
+    ----------
+    model : sklearn.decomposition.PCA
+        fitted PCA model.
+    feature_names : list
+        names of the features that went into the PCA.
+
+    Returns
+    -------
+    most_important_names : list
+        names of features with most impact on variance.
+
     '''
     # number of components
     n_pcs= model.components_.shape[0]

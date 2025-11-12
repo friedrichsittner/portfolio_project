@@ -121,17 +121,16 @@ def optimize_linear_models_wo_pca(region, model_name, save = False):
     else:
         model = LinearSVR()
         search_space = {'LinearSVR__C' : np.geomspace(0.001, 1000, 15)}
-        
+  
     #features_test = wind_temp_pca(features_test, target_test, n_comp = 2)
-    wind_temp_pca = pickle.load('wind_temp_pca.p')
+    wind_temp_pca = pickle.load(open('/home/jane/Documents/Weiterbildung/DPP/portfolio_project/scripts/models/wind_temp_pca.p', 'rb'))
     n_components = (len(wind_temp_pca.named_transformers_['pca_temp'].explained_variance_ratio_) +
                     len(wind_temp_pca.named_transformers_['pca_wind'].explained_variance_ratio_))
     pca_names = ['PCA_comp_' + str(i) for i in range(n_components)]
     remaining_names = features_test.columns[wind_temp_pca._remainder[2]]
     features_test = pd.DataFrame(wind_temp_pca.transform(features_test),
                                   columns = list(pca_names)+ list(remaining_names),
-                                  index = target_test.index)
-    
+                                  index = target_test.index)  
     
     pipeline = Pipeline([('std', StandardScaler()),
                          (model_name, model)])

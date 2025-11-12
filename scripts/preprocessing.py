@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 
-def remove_outliers(features_soil, features_met, target_soil, target_met):
+def remove_outliers_soil(features_soil, target_soil):
     '''
     Removes Outliers from Soil Data and corresponding lines from meteorological data
 
@@ -32,34 +32,44 @@ def remove_outliers(features_soil, features_met, target_soil, target_met):
     mask_SQ = ~(features_soil['SQ1'] >= 5)
     features_soil = features_soil[mask_SQ]
     target_soil = target_soil[mask_SQ]
-    mask_met = pd.Series([True]*len(features_met), index = features_met.index)
-    for fips in mask_SQ[mask_SQ == False].index:
-        mask_met &= ~(features_met['fips'] == fips)
 
     #remove land covered by more than 50% water
     mask_WAT_LAND = ~(features_soil['WAT_LAND'] >= 50)
     features_soil = features_soil[mask_WAT_LAND]
     target_soil = target_soil[mask_WAT_LAND]
-    for fips in mask_WAT_LAND[mask_WAT_LAND == False].index:
-        mask_met &= ~(features_met['fips'] == fips)
 
     #remove rows where score is not given
     mask_score = ~target_soil.isna()
     features_soil = features_soil[mask_score[0]]
     target_soil = target_soil[mask_score[0]]
-    for fips in mask_score[mask_score[0] == False].index:
-        mask_met &= ~(features_met['fips'] == fips)
-    
-    
-    features_met = features_met.drop(mask_met[mask_met == False].index)
-    target_met = target_met.drop(mask_met[mask_met == False].index)
-    return features_soil, features_met, target_soil, target_met
+
+    return features_soil, target_soil
+
+def remove_soil_fips_from_met(features_soil, features_met, target_met):
+    '''
+    Remove features correspond to fips removed in soil data
+
+    Parameters
+    ----------
+    features_soil : pd.Dataframe
+        soil features that have had their outliers removed
+    features_met : pd.Dataframe
+    target_met : 1D pd.Dataframe
+
+    Returns
+    -------
+    features_met : pd.Dataframe
+    target_met : 1D pd.Dataframe
+
+    '''
+    mask = features_met.fips.isin(features_soil.index)
+    features_met = features_met[mask]
+    target_met = target_met[mask]
+    return features_met, target_met
 
 if __name__ == '__main__':
     path = '/home/jane/Documents/Weiterbildung/DPP/portfolio_project/data/processed/'
     features_soil = pd.read_pickle(path + 'soil/features_train_soil.p')
     target_soil = pd.read_pickle(path + 'soil/target_train_soil.p')
-    features_met = pd.read_pickle(path + 'met/features_train_met.p')
-    target_met = pd.read_pickle(path + 'met/target_train_met.p')
     
-    remove_outliers(features_soil, features_met, target_soil, target_met)
+    remove_outliers_soil(features_soil, target_soil)

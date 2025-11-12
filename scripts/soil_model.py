@@ -15,7 +15,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
 
-from preprocessing_soil import remove_outliers
+from preprocessing import remove_outliers_soil
 
 def ridge_model(features_train, features_test, target_train, target_test):
     
@@ -47,12 +47,12 @@ def ridge_model(features_train, features_test, target_train, target_test):
 if __name__ == '__main__':
     
     path = '/home/jane/Documents/Weiterbildung/DPP/portfolio_project/data/processed/soil/'
+    path_met = '/home/jane/Documents/Weiterbildung/DPP/portfolio_project/data/processed/met/'
     features_train = pd.read_pickle(path + 'features_train_soil.p')
     target_train = pd.read_pickle(path + 'target_train_soil.p')
     features_test = pd.read_pickle(path + 'features_test_soil.p')
     target_test = pd.read_pickle(path + 'target_test_soil.p')
-
-    features_train, target_train = remove_outliers(features_train, target_train)
+    features_train, target_train = remove_outliers_soil(features_train, target_train)
     
     pipeline_soil, target_test_pred = ridge_model(features_train, features_test, target_train, target_test)
     

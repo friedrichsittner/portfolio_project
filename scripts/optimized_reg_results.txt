@@ -117,5 +117,40 @@ Results for Model LinearSVR
 -0.7002153930806035
 Model LinearSVR for Region midwest yields a Mean Squared Error of 0.2011635796830736
 
+Following Models were run with PCA on wind and temperature data with PCA = 0.95, unless otherwise given
 
+Run at 2025-11-12 11:33:15.419158
+Region: west
+Results for Model Lasso
+{'Lasso__alpha': 0.03593813663804628}
+-1.3297624270989283
+Model Lasso for Region west yields a Mean Squared Error of 4.059010186329851
+
+Run at 2025-11-12 11:35:41.450830
+Region: west
+Results for Model LinearSVR
+{'LinearSVR__C': 0.0026826957952797246}
+-1.489666087118367
+Model LinearSVR for Region west yields a Mean Squared Error of 2.936952304785355
+
+Run at 2025-11-12 11:38:10.977788
+Region: east
+Results for Model LinearSVR
+{'LinearSVR__C': 51.794746792312125}
+-0.4303668172981753
+Model LinearSVR for Region east yields a Mean Squared Error of 0.13190910116047544
+
+Run at 2025-11-12 11:48:16.979539
+Region: south
+Results for Model LinearSVR
+{'LinearSVR__C': 19.306977288832496}
+-0.8910969551210002
+Model LinearSVR for Region south yields a Mean Squared Error of 0.6243492681882321
+
+Run at 2025-11-12 11:56:16.458331
+Region: midwest
+Results for Model LinearSVR
+{'LinearSVR__C': 19.306977288832496}
+-0.7084391366018046
+Model LinearSVR for Region midwest yields a Mean Squared Error of 0.10174527118779435
 
